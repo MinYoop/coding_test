@@ -48,3 +48,49 @@ def bfs(x,y):
 
 bfs(0,0)
 print(d[N-1][M-1])
+
+# # 2번째 풀이
+
+# from collections import deque
+
+# n, m = map(int,input().split())
+
+# board = [list(map(int,input())) for _ in range(n)]
+# chk = [[0] * m for _ in range(n)]
+
+# dx = [-1, 0, 1, 0]
+# dy = [0, 1, 0, -1]
+
+# def bfs():
+
+#     global chk
+    
+#     q = deque()
+#     chk[0][0] = 1
+#     visited = [(0,0)]
+    
+#     q.append((0,0))
+    
+#     while q:
+
+#         x, y = q.popleft()       
+
+#         for i in range(4):
+#             nextX = x + dx[i]
+#             nextY = y + dy[i]
+
+#             if 0 <= nextX < n and 0 <= nextY < m:
+#                 if board[nextX][nextY] == 1 and (nextX, nextY) not in visited:
+#                     visited.append((nextX,nextY))
+#                     q.append((nextX,nextY))
+#                     chk[nextX][nextY] = chk[x][y] + 1
+
+
+# bfs()
+
+# print(chk[n-1][m-1])
+
+
+
+
+
