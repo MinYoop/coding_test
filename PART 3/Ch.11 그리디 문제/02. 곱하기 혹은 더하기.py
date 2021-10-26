@@ -10,18 +10,37 @@
 # print(result)
 
 # 답
-data = input()
+# data = input()
 
-result = int(data[0])
+# result = int(data[0])
 
-for i in range(1, len(data)):
+# for i in range(1, len(data)):
 
-    num = int(data[i])
+#     num = int(data[i])
+#     if num <= 1 or result <= 1:
+#         result += num
+#     else:
+#         result *= num
+
+# print(result)
+
+    
+# 2회독
+
+# 2회독 풀이
+
+
+n = input()
+
+result = int(n[0])
+
+for i in range(1, len(n)):
+
+    num = int(n[i])
+
     if num <= 1 or result <= 1:
         result += num
     else:
         result *= num
 
 print(result)
-
-    

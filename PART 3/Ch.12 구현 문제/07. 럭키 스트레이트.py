@@ -1,9 +1,11 @@
-n = input()
+# 2회독 풀이
 
-left = n[:len(n)//2]
-right = n[(len(n)//2):]
+s = input()
+left, right = sum(map(int,s[:len(s)//2])), sum(map(int,s[len(s)//2:]))
 
-if sum(list(map(int,left))) == sum(list(map(int,right))):
+if left == right:
     print("LUCKY")
 else:
     print("READY")
+
+
