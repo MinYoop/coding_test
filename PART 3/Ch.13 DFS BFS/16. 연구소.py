@@ -79,63 +79,131 @@
 
 # 아래도 백준에서 pypy로 돌려야 돌아간다
 
-n, m = map(int, input().split())
+# n, m = map(int, input().split())
 
-data = []
-temp = [[0] * m for _ in range(n)]
+# data = []
+# temp = [[0] * m for _ in range(n)]
 
-for _ in range(n):
-    data.append(list(map(int,input().split())))
+# for _ in range(n):
+#     data.append(list(map(int,input().split())))
 
-dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
+# dx = [-1, 0, 1, 0]
+# dy = [0, 1, 0, -1]
+
+# result = 0
+
+# def virus(x, y):
+#     for i in range(4):
+#         nx = x + dx[i]
+#         ny = y + dy[i]
+
+#         if nx >= 0 and nx < n and ny >= 0 and ny < m:
+#             if temp[nx][ny] == 0:
+#                 temp[nx][ny] = 2
+#                 virus(nx,ny)
+
+# def get_score():
+
+#     score = 0
+#     for i in range(n):
+#         for j in range(m):
+#             if temp[i][j] == 0:
+#                 score += 1
+
+#     return score
+
+# def dfs(count):
+#     global result
+
+#     if count == 3:
+#         for i in range(n):
+#             for j in range(m):
+#                 temp[i][j] = data[i][j]
+        
+#         for i in range(n):
+#             for j in range(m):
+#                 if temp[i][j] == 2:
+#                     virus(i, j)
+        
+#         result = max(result, get_score())
+#         return
+    
+#     for i in range(n):
+#         for j in range(m):
+#             if data[i][j] == 0:
+#                 data[i][j] = 1
+#                 count += 1
+#                 dfs(count)
+#                 data[i][j] = 0
+#                 count -= 1
+
+# dfs(0)
+# print(result)
+
+# 2회차 풀이
+
+from itertools import combinations
+from copy import deepcopy
+
+n, m = map(int,input().split())
+
+board = [list(map(int,input().split())) for _ in range(m)]
+
+area0 = []
+area2 = []
 
 result = 0
 
-def virus(x, y):
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-
-        if nx >= 0 and nx < n and ny >= 0 and ny < m:
-            if temp[nx][ny] == 0:
-                temp[nx][ny] = 2
-                virus(nx,ny)
-
-def get_score():
-
-    score = 0
+def countSafeArea(board):
+    result = 0
     for i in range(n):
         for j in range(m):
-            if temp[i][j] == 0:
-                score += 1
+            if board[i][j] == 0:
+                result += 1
+    return result
 
-    return score
+def dfs(tmpArea, i, j):
 
-def dfs(count):
-    global result
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
 
-    if count == 3:
-        for i in range(n):
-            for j in range(m):
-                temp[i][j] = data[i][j]
-        
-        for i in range(n):
-            for j in range(m):
-                if temp[i][j] == 2:
-                    virus(i, j)
-        
-        result = max(result, get_score())
-        return
+    for k in range(4):
+        x, y = i + dx[k], j + dy[k]
+
+        if 0 <= x < n and 0 <= y < m and tmpArea[x][y] == 0:
+            tmpArea[x][y] = 2
+            dfs(tmpArea, x, y) 
+
+for i in range(n):
+    for j in range(m):
+        if board[i][j] == 0:
+            area0.append((i,j))
+        elif board[i][j] == 2:
+            area2.append((i,j))
     
-    for i in range(n):
-        for j in range(m):
-            if data[i][j] == 0:
-                data[i][j] = 1
-                count += 1
-                dfs(count)
-                data[i][j] = 0
-                count -= 1
+area0 = list(combinations(area0,3))
 
-dfs(0)
+for wall in area0:
+    tmpArea = deepcopy(board)
+
+    for i, j in wall:
+        tmpArea[i][j] = 1
+    
+    for i, j in area2:
+        dfs(tmpArea,i,j)
+
+    cnt = countSafeArea(tmpArea)
+    # if cnt == 27:
+    #     print(wall)
+
+    result = max(result, cnt)
+    
+
 print(result)
+    
+
+
+
+
+
+
