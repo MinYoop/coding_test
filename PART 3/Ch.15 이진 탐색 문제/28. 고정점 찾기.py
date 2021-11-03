@@ -20,7 +20,32 @@
 
 
 
+n = int(input())
+
+lst = list(map(int,input().split()))
+
+def binary(lst, start, end):
 
 
+    if start > end:
+        return -1
+    mid = (start + end)//2
+
+
+    if lst[mid] == mid:
+
+        return mid
+
+    elif lst[mid] < mid:
+
+        return binary(lst, mid + 1, end)
+    
+    else:
+        return binary(lst, start, mid -1)
+
+print(binary(lst,0,len(lst)-1))
+
+
+    
 
 
