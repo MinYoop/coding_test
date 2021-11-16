@@ -31,3 +31,10 @@ def solution(n, build_frame):
             if not possible(answer):
                 answer.append([x,y,a])
     return sorted(answer) 
+
+# 2회차 풀이
+
+def solution(n, build_frame):
+    answer = []
+
+    return answer
