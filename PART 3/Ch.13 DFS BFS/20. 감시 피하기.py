@@ -1,86 +1,157 @@
-from itertools import combinations
+# from itertools import combinations
+
+# n = int(input())
+
+# board = []
+# teachers = []
+# spaces = []
+
+# for i in range(n):
+#     board.append(list(input().split()))
+#     for j in range(n):
+
+#         if board[i][j] == 'T':
+#             teachers.append((i,j))
+
+#         if board[i][j] == 'X':
+#             spaces.append((i,j))
+
+# def watch(x,y,direction):
+
+#     if direction == 0:
+#         while y >= 0:
+#             if board[x][y] == 'S':
+#                 return True
+#             if board[x][y] == '0':
+#                 return False
+#             y -= 1
+    
+#     if direction == 1:
+#         while y < n:
+#             if board[x][y] == 'S':
+#                 return True
+#             if board[x][y] == '0':
+#                 return False
+#             y += 1
+
+#     if direction == 2:
+#         while x >= 0:
+#             if board[x][y] == 'S':
+#                 return True
+#             if board[x][y] == '0':
+#                 return False
+#             x -= 1
+#     if direction == 3:
+#         while x < n:
+#             if board[x][y] == 'S':
+#                 return True
+#             if board[x][y] == '0':
+#                 return False
+#             x += 1
+
+#     return False
+
+# def process():
+
+#     for x,y in teachers:
+
+#         for i in range(4):
+#             if watch(x, y, i):
+#                 return True
+        
+#     return False
+
+# find = False
+
+# for data in combinations(spaces, 3):
+
+#     for x,y in data:
+#         board[x][y] = '0'
+
+#     if not process():
+
+#         find = True
+#         break
+
+#     for x,y in data:
+#         board[x][y] = 'X'
+
+# if find:
+#     print('YES')
+# else:
+#     print('NO')
+
+
+    
+
+
+
+# 2회차 풀이
+
 
 n = int(input())
 
-board = []
-teachers = []
-spaces = []
+board = [input().split() for _ in range(n)]
 
-for i in range(n):
-    board.append(list(input().split()))
-    for j in range(n):
+def check(board): # 찾을 수 있는지 체크
 
-        if board[i][j] == 'T':
-            teachers.append((i,j))
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
 
-        if board[i][j] == 'X':
-            spaces.append((i,j))
+    # for i in board:
+    #     print(i)
+    # print("-----------------")
+    for i in range(n):
+        for j in range(n):
 
-def watch(x,y,direction):
+            if board[i][j] == 'T':
 
-    if direction == 0:
-        while y >= 0:
-            if board[x][y] == 'S':
-                return True
-            if board[x][y] == '0':
-                return False
-            y -= 1
-    
-    if direction == 1:
-        while y < n:
-            if board[x][y] == 'S':
-                return True
-            if board[x][y] == '0':
-                return False
-            y += 1
+                for k in range(4):
 
-    if direction == 2:
-        while x >= 0:
-            if board[x][y] == 'S':
-                return True
-            if board[x][y] == '0':
-                return False
-            x -= 1
-    if direction == 3:
-        while x < n:
-            if board[x][y] == 'S':
-                return True
-            if board[x][y] == '0':
-                return False
-            x += 1
+                    x, y = i, j
 
-    return False
+                    while board[x][y] != 'O':
 
-def process():
+                        x += dx[k]
+                        y += dy[k]
 
-    for x,y in teachers:
+                        if x < 0 or x >= n or y < 0 or y >= n:
+                            break
 
-        for i in range(4):
-            if watch(x, y, i):
-                return True
+                        if board[x][y] == 'S':
+                            return False
+
+    return True
+
+flag = False
+
+def dfs(cnt):
+    global flag
+    global board
+
+    if flag == True:
+        return
+
+    if cnt == 3:
+        if check(board):
+            # for i in board:
+            #     print(i)
+            flag = True
         
-    return False
+        return
 
-find = False
+    for i in range(n):
+        for j in range(n):
 
-for data in combinations(spaces, 3):
+            if board[i][j] == 'X':
 
-    for x,y in data:
-        board[x][y] = '0'
+                board[i][j] = 'O'
+                dfs(cnt+1)
+                board[i][j] = 'X'
 
-    if not process():
+dfs(0)
 
-        find = True
-        break
-
-    for x,y in data:
-        board[x][y] = 'X'
-
-if find:
-    print('YES')
+if flag:
+    print("YES")
 else:
-    print('NO')
-
-
-    
-
+    print("NO")
