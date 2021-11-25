@@ -29,26 +29,55 @@
 #     return answer
 
 
+# def solution(N, stages):
+#     answer = []
+#     length = len(stages)
+
+#     for i in range(1,N+1):
+#         count = stages.count(i)
+
+#         if length == 0:
+#             fail = 0
+#         else:
+#             fail = count / length
+
+#         answer.append((i, fail))
+#         length -= count
+
+#     answer = sorted(answer, key = lambda x: x[1], reverse=True)
+
+#     answer = [i[0] for i in answer]
+#     return answer
+
+
+
+
+
+# 2회차 풀이
+
 def solution(N, stages):
-    answer = []
+
+    result = []
+
     length = len(stages)
 
     for i in range(1,N+1):
-        count = stages.count(i)
+
+        cnt = stages.count(i)
 
         if length == 0:
-            fail = 0
+            cal = 0
         else:
-            fail = count / length
+            cal = cnt / length
 
-        answer.append((i, fail))
-        length -= count
+        length -= cnt
 
-    answer = sorted(answer, key = lambda x: x[1], reverse=True)
+        result.append([i,cal])
 
-    answer = [i[0] for i in answer]
+    result.sort(reverse=True, key= lambda x : (x[1],-x[0]))
+
+    answer = [x[0] for x in result]    
+    
     return answer
 
-
-
-
+print(solution(5,[2, 1, 2, 6, 2, 4, 3, 3]))
